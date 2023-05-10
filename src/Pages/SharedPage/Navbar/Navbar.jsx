@@ -3,9 +3,9 @@ import logo from '../../../assets/logo.svg'
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-gray-200 h-24 px-16">
       <div className="navbar-start">
-        <img src={logo} alt="" />
+        <img className="p-2" src={logo} alt="" />
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 font-semibold">
@@ -27,7 +27,8 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Get started</a>
+        
+        <button className="btn btn-outline bg-[#ff6600] text-white">Appointment</button>
       </div>
     </div>
   );
