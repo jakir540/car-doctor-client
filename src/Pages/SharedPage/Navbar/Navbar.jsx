@@ -40,9 +40,12 @@ const handleLogout =()=>{
          { 
          
           user?.email?         
+          <>
           <li>
+          <button><Link to="/bookingDetails">Booking Details</Link></button>
           <button onClick={handleLogout}><Link to="/login">Log out</Link></button>
         </li>
+          </>
           :         
            <li>
            <Link to="/login">Login</Link>

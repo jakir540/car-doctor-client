@@ -25,3 +25,4 @@ const ServicesCard = ({service}) => {
 };
 
 export default ServicesCard;
+

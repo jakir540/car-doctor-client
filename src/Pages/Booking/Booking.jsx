@@ -6,7 +6,7 @@ const Booking = () => {
   const service = useLoaderData();
 
   const { user } = useContext(AuthContext);
-  const { _id, title, img, price, service_id } = service;
+  const { _id, title, img, price, service_id ,status} = service;
   const handleSubmitBook = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -33,9 +33,10 @@ const Booking = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-    //     if (data.insertedId) {
+        // if (data.insertedId) {
             
-    //     }
+            
+        // }
       });
 
     console.log(booking);
