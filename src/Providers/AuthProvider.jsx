@@ -30,6 +30,8 @@ const logOut =()=>{
         }
     },[])
 
+    
+
     const authInfo ={
         user,
         loading,
