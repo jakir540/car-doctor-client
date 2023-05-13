@@ -2,11 +2,6 @@ const BookingDetailsTable = ({ book,HandleDelete,HandleUpdateBooking }) => {
   const { _id, name, img, price, service, date,status } = book;
   console.log(book);
 
-
-
-
-
-
   return (
     <tr>
       <th>

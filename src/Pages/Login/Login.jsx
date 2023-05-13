@@ -1,12 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginImg from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import SocialLogin from "../SharedPage/SocialLogin/SocialLogin";
 
 
 const Login = () => {
     const {signIn}= useContext(AuthContext);
+  const location = useLocation();
+  const Navigate = useNavigate()
+  
 
+
+  const from = location.state?.from?.pathname || "/"
+  console.log(from);
 
 
     const handleLogin=(event)=>{
@@ -20,7 +27,34 @@ const Login = () => {
         signIn(email,password)
         .then(result  =>{
           const loggedUser = result.user;
+          const loggedEmail ={
+            email: loggedUser.email
+          } 
           console.log(loggedUser);
+
+          //post and receve token
+          fetch('http://localhost:5000/jwt',{
+            method:"POST",
+            headers:{
+              'content-type':'application/json'
+            },
+            body:JSON.stringify(loggedEmail)
+          })
+          .then(res => res.json())
+          .then( data => {
+            console.log("jwt token",data);
+            localStorage.setItem('car-access-token',data.token)
+            Navigate(from, {replace:true}) 
+          })
+
+
+
+
+
+
+
+
+
         })
         .catch(error => console.log(error))
 
@@ -73,6 +107,7 @@ const Login = () => {
             </form>
             <small className="text-center">New To Cars Doctors <span className="text-orange-500"><Link to="/signup">Sign up</Link></span></small>
           </div>
+          <SocialLogin></SocialLogin>
         </div>
       </div>
     </div>

@@ -1,20 +1,32 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import BookingDetailsTable from "./BookingDetailsTable";
+import { useNavigate } from "react-router-dom";
 
 const BookingDetails = () => {
   const { user } = useContext(AuthContext);
   const [booking, setBooking] = useState([]);
+  const navigate = useNavigate()
 
   const url = `http://localhost:5000/booking?email=${user?.email}`;
   useEffect(() => {
-    fetch(url)
+    fetch(url, {
+      method: "GET",
+      headers: {
+        authorization:`Bearer ${localStorage.getItem("car-access-token")}`,
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
-        setBooking(data);
-        console.log(data);
+        if (!data.error) {
+          setBooking(data);
+        }
+      else{
+        navigate('/')
+      }
+       
       });
-  }, []);
+  }, [url]);
 
   const HandleDelete = (_id) => {
     fetch(`http://localhost:5000/booking/${_id}`, {
@@ -31,8 +43,6 @@ const BookingDetails = () => {
       });
   };
 
-
-  
   const HandleUpdateBooking = (_id) => {
     fetch(`http://localhost:5000/booking/${_id}`, {
       method: "PATCH",
@@ -45,11 +55,11 @@ const BookingDetails = () => {
       .then((data) => {
         console.log(data);
         if (data.modifiedCount > 0) {
-          const remaining = booking.filter(book => book._id !== _id);
-          const updated = booking.find(book => book._id === _id);
+          const remaining = booking.filter((book) => book._id !== _id);
+          const updated = booking.find((book) => book._id === _id);
           updated.status = "confirm";
           const newBooking = [updated, ...remaining];
-          setBooking(newBooking)
+          setBooking(newBooking);
         }
       });
   };
